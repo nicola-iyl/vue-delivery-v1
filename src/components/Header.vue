@@ -17,7 +17,7 @@
         <router-link v-if="menuOpen" to="/about" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">Scegli l'orario</router-link>
       </div>
       <div class="hidden md:block">
-        <ShoppingCartIcon class="h-5 w-5 text-gray-300 hover:text-white" />
+        <ShoppingCartIcon class="h-5 w-5 text-gray-300 hover:text-white" />{{carts_num}}
       </div>
     </div>
   </nav>
@@ -30,6 +30,7 @@ export default {
   components: { ShoppingCartIcon },
   data(){
     return {
+      carts_num: this.$store.state.cart.length,
     }
   },
   computed: {

@@ -5,6 +5,10 @@ export default createStore({
     return {
       isMobile: false,
       menuOpen: false,
+      cart:[
+        {product_id:'1',nome:'Pizza Margherita',qta:2,prezzo:12.5},
+        {product_id:'2',nome:'Pizza 4 Stagioni',qta:2,prezzo:10.5}
+      ]
     }
   }
   ,

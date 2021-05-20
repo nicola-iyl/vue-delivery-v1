@@ -1,7 +1,9 @@
 <template>
   <div class="card bg-white py-3 px-5 rounded-xl flex flex-col mb-5">
     <div class="w-full py-3" v-for="category in categories" :key="category.id">
-      <button class="focus:outline-none w-full block text-gray-800 bg-gray-100 hover:bg-gray-400 font-bold text-sm py-2.5 px-5 border-2 rounded-md hover:shadow-lg">
+      <button
+          v-on:click="showProducts(category.id)"
+          class="focus:outline-none w-full block text-gray-800 bg-gray-100 hover:bg-gray-400 font-bold text-sm py-2.5 px-5 border-2 rounded-md hover:shadow-lg">
         {{category.nome}}
       </button>
     </div>
@@ -21,7 +23,9 @@ export default {
     }
   },
   methods:{
-    showProducts(){},
+    showProducts(category_id){
+      this.$emit('showProducts',category_id);
+    },
   }
 }
 </script>
