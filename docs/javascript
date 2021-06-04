@@ -1,0 +1,625 @@
+JavaScript prevede cinque tipi di dato primitivi, numeri, stringhe, booleani, null e undefined, e un un tipo di dato complesso, gli oggetti.
+Array, le espressioni regolari, le funzioni, sono in realtà oggetti.
+
+JavaScript converte automaticamente un tipo primitivo nel corrispondente oggetto quando utilizziamo un suo metodo o una sua proprietà:
+    var nomeMaiuscolo = "Andrea".toUpperCase();
+    A partire dal tipo primitivo stringa, JavaScript crea il corrispondente oggetto String e invoca il metodo toUppercase() per ottenere la versione in caratteri maiuscoli della stringa.
+
+    Per questo non sono in pochi a semplificare sostenendo che in realtà in JavaScript tutto è oggetto
+
+Una stringa in JavaScript è una sequenza di caratteri delimitata da doppi o singoli apici
+    per inserire un ritorno a capo possiamo utilizzare la sequenza \n
+    "Ieri pioveva.\nOggi c'è il sole."
+
+JavaScript ha un unico tipo di dato numerico, cioè non c’è distinzione formale, ad esempio, tra intero e decimale
+    Per rappresentato un numero non intero facciamo ricorso al punto come separatore della parte decimale:
+    var numeroDecimale = 0.52; var decimaleNegativo = -1.2;
+
+    Un altro valore numerico speciale è NaN, acronimo di Not a Number, che indica un valore numerico non definito.
+    Nel seguente esempio il valore della variabile x dopo l’assegnamento è NaN:
+    var x = x + 1;
+
+Il tipo di dato null prevede il solo valore null, che rappresenta un valore che non rientra tra i tipi di dato del linguaggio, cioè non è un
+valore numerico valido, né una stringa, né un oggetto.
+
+Il tipo di dato undefined rappresenta un valore che non esiste. Anche questo tipo di dato contiene un solo valore: undefined.
+Questo è il valore di una variabile non inizializzata, a cui non è stato assegnato nessun valore, nemmeno null.
+
+Il tipo di dato booleano prevede due soli valori: true (vero) e false (falso).
+
+Una variabile è identificata da un nome che deve rispettare alcune regole es. non può contenere caratteri speciali(?,-,.) e altro..
+    È opportuno pertanto dichiarare sempre una variabile tramite la parola chiave var:
+    var miaVariabile;
+
+    Possiamo però lavorare in strict mode, una opzione introdotta nella versione 5 dello standard ECMAScript che ci consente,
+    tra le altre cose, di ricevere una segnalazione di errore quando non dichiariamo le variabili.
+    Per abilitare lo strict mode sarà sufficiente inserire all’inizio del nostro codice, il comando:
+    "use strict";
+
+A partire dalla versione 6 dello standard viene introdotta la possibilità di dichiarare costanti tramite la parola chiave const:
+    const PIGRECO = 3.14;
+    Questo garantisce l’utilizzo in sola lettura del valore, evitando rischi di modifica durante l’esecuzione.
+
+JavaScript prevede operatori unari, binari e ternari a seconda che possano combinare rispettivamente uno, due o tre valori.
+    operatori aritmetici, che consentono la combinazione di valori numerici
+    Gli operatori aritmetici prevedono anche tre operatori unari:
+    - 	negazione
+    ++ 	incremento
+    -- 	decremento
+
+    L’unico operatore ternario previsto da JavaScript è l’operatore condizionale. Esso restituisce un valore in base ad una espressione boleana. La sua sintassi è:
+    condizione ? valore1 : valore 2
+    x%2 == 0 ? "pari" : "dispari"
+
+    parseInt e parseFloat
+    Se non si può evitare il confronto tra tipi diversi, è opportuno convertire esplicitamente un valore di un tipo in un altro tipo, ricorrendo ad alcune funzioni predefinite.
+
+    la funzione parseInt() converte una stringa in un valore intero.
+    parseInt("12")	// 12
+    parseInt("12abc")	// 12
+    parseInt("a12bc")	// NaN
+    parseInt("12.5")	// 12
+
+    La funzione parseFloat() restituisce un valore numerico considerando l’eventuale virgola:
+    parseFloat("12")		//12
+    parseFloat("12.5")	//12.5
+
+Gli array consentono di associare più valori ad un unico nome di variabile (o identificatore).
+    var giorniDellaSettimana = [
+    	"lunedì",
+    	"martedì",
+    	"mercoledì",
+    	"giovedì",
+    	"venerdì",
+    	"sabato",
+    	"domenica"];
+    se vogliamo accedere al primo elemento dell’array dei giorni della settimana scriveremo:
+        var primoGiorno = giorniDellaSettimana[0];
+
+    Gli elementi di un array possono essere di qualsiasi tipo di dato previsto da JavaScript, quindi possiamo avere array con elementi di diverso tipo:
+        var myArray = [123, "stringa", true, null];
+    Un elemento di un array può anche essere un altro array:
+        var myArray = [123, "stringa", ["a", "b", 99]];
+
+for-in e for-of
+    Per lavorare più comodamente con gli array JavaScript prevede due varianti del for: il for...in e il for...of
+        var quantita = [12, 34, 45, 7, 19];
+        var totale = 0;
+        var indice;
+        for (indice in quantita) {
+        	totale = totale +  quantita[indice];
+        }
+
+    Utilizzando il for..of invece possiamo scrivere il ciclo in questo modo:
+        var quantita = [12, 34, 45, 7, 19];
+        var totale = 0;
+        var valore;
+        for (valore of quantita) {
+        	totale = totale +  valore;
+        }
+
+Definire una funzione JavaScript
+    function nome(argomenti) {
+    // istruzioni
+    }
+
+    Una volta dichiarata, una funzione non viene eseguita subito. Stiamo semplicemente dicendo all’engine JavaScript che al blocco di codice indicato viene assegnato un nome.
+    L’esecuzione vera e propria avviene con l’invocazione o chiamata, il cui schema sintattico è:
+    nome(valori);
+
+    Nel corpo della funzione può essere presente l’istruzione return che consente di terminare e restituire un valore al codice che l’ha chiamata
+        function somma() {
+            var z = 11 + 5;
+            return z;
+        }
+        var risultato = somma();
+
+        function somma(x, y) {
+            var z = x + y;
+            return z;
+        }
+
+        var risultato = somma(11, 5);
+
+        Con l’avvento di ECMAScript 6:
+            viene introdotta la possibilità di specificare dei valori di default:
+            function somma(x = 0, y = 0) {
+                var z = x + y;
+                return z;
+            }
+
+            Rest parameter, argomenti aggiuntivi
+            Si tratta di una notazione speciale per indicare un elenco indefinito di argomenti aggiuntivi
+            function eseguiOperazione(x, ...y) {
+                var z = 0;
+                switch (x) {
+                    case "somma":
+                        for (i in y) {
+                            z = z + y[i];
+                        }
+                        break;
+                    case "moltiplica":
+                        for (i in y) {
+                            z = z * y[i];
+                        }
+                        break;
+                    case "dividi":
+                        z = y[0]/y[1];
+                        break;
+                    default:
+                        z = NaN;
+                        break;
+                    }
+                return z;
+            }
+            Come possiamo vedere, abbiamo specificato un argomento x che rappresenta il nome dell’operazione da eseguire e
+            un argomento y preceduto da tre punti che rappresenta il resto dei valori da passare alla funzione.
+            La notazione dell’argomento preceduto dai puntini cattura l’elenco degli argomenti successivi al primo e
+            lo rende disponibile all’interno della funzione sotto forma di array.
+            Possiamo quindi invocare la nostra funzione in uno dei seguenti modi:
+                eseguiOperazione("somma", 12, 54, 2, 7, 12);
+                eseguiOperazione("moltiplica", 4, 11, 32);
+                eseguiOperazione("dividi", 45, 9, 6, 17);
+
+            La stessa notazione del rest parameter può essere utilizzata nelle chiamate a funzioni che prevedono diversi argomenti.
+            In questo caso si parla di spread operator, cioè di un operatore che sparge i valori contenuti
+            in un array sugli argomenti di una funzione, come nel seguente esempio:
+                var addendi = [8, 23, 19, 72, 3, 39];
+                somma(...addendi);
+
+            La chiamata con lo spread operator è equivalente alla seguente chiamata:
+                somma(8, 23, 19, 72, 3, 39);
+
+Let
+    Se abbiamo bisogno di creare uno scope specifico per una o più variabili possiamo ricorrere all’istruzione let.
+    Questa istruzione, definita dalle specifiche di ECMAScript 6, consente di dichiarare una o più variabili in modo analogo a var,
+    ma a differenza di quest’ultima limita lo scope della variabile al blocco di codice, all’istruzione o all’espressione in cui viene utilizzata.
+    Quindi, ad esempio, nel seguente codice:
+        var x = 0;
+        for (let i = 0; i < 10; i++) {
+            x = x + 1;
+        }
+
+        Grazie a let dichiariamo ed utilizziamo la variabile i soltanto all’interno del for,
+        evitando eventuali collisioni con altre variabili omonime definite in scope più esterni.
+
+Object literal
+    Un modo per creare un oggetto è la rappresentazione letterale: si potrebbe dire che definiamo l’oggetto
+    a partire dal proprio contenuto, come mostrato nel seguente esempio:
+        var oggettoVuoto = {};
+        var persona = { "nome": "Mario", "cognome": "Rossi"};
+        var persona = { nome: "Mario", cognome: "Rossi"};
+
+        Tramite la notazione letterale rappresentiamo un oggetto racchiudendo tra parentesi graffe le sue proprietà e i suoi metodi.
+        I doppi apici intorno al nome della proprietà sono opzionali
+
+    possiamo creare oggetti annidati come mostrato di seguito:
+        var persona = {
+        	nome: "Mario",
+        	cognome: "Rossi",
+        	indirizzo: {
+        		via: "Via Garibaldi",
+        		numero: 15,
+        		CAP: "00100",
+        		citta: "Roma"
+        	}
+        };
+
+    Accedere alle proprietà
+        var nome = persona.nome;
+
+        Il tentativo di accedere ad una proprietà non definita in un oggetto non genera un errore, ma restituisce il valore undefined
+        Se proviamo ad assegnare un valore ad una proprietà non definita creiamo di fatto questa proprietà inizializzandola con il valore assegnato:
+            persona.eta = 32;
+            Questo aspetto ci mostra come gli oggetti in JavaScript siano entità dinamiche, nel senso che la loro struttura
+            è molto flessibile e può essere modificata dinamicamente anche durante l’esecuzione di uno script
+
+    Metodi
+        A differenza delle proprietà di un oggetto che rappresentano dati, i metodi rappresentano attività che un oggetto può compiere.
+
+            function visualizzaNomeCognome() { return "Mario Rossi"; }
+            persona.nomeCognome = visualizzaNomeCognome;
+
+            La proprietà nomeCognome, dal momento che contiene una funzione, è di fatto un metodo.
+            Per eseguirlo dobbiamo far riferimento ad esso specificando le parentesi tonde come in una chiamata di funzione:
+                var nomeCognome = persona.nomeCognome();
+
+            Un modo alternativo per definire un metodo è mostrato di seguito:
+                persona.nomeCognome = function () { return "Mario Rossi"; }
+
+            this
+                persona.nomeCognome = function () { return this.nome + " " + this.cognome; }
+
+Object
+    JavaScript ci mette a disposizione diversi oggetti predefiniti che risultano molto comodi per le più comuni attività di programmazione.
+    Il primo di questi oggetti che prendiamo in considerazione è Object.
+    In pratica ogni oggetto, predefinito o meno che sia, è costruito su Object in base ad un meccanismo che approfondiremo più avanti.
+    Questo fa sì che tutti gli oggetti JavaScript abbiano alcune caratteristiche comuni.
+
+        Possiamo ottenere lo stesso risultato utilizzando direttamente l’oggetto Object:
+            var persona = new Object();
+            persona.nome = "Mario";
+            persona.cognome = "Rossi";
+
+            var numero      = new Object(12);
+            var altroNumero = new Object(3*2);
+            var stringa     = new Object("test");
+            var persona     = new Object({nome: "Mario", cognome: "Rossi"});
+
+            A parte l’ultima istruzione che è equivalente alla creazione di un oggetto tramite la sua rappresentazione letterale,
+            le prime tre istruzioni creano un oggetto a partire da un tipo di dato primitivo, come un numero o una stringa.
+            Il risultato ottenuto non è un semplice valore numerico o un valore di tipo stringa, ma oggetti specializzati nella manipolazione di valori numerici e stringhe.
+
+        Dal momento che tutti gli oggetti JavaScript sono basati su Object, essi condividono alcuni metodi, come ad esempio: toString() e valueOf().
+            var x = new Object(32);
+            x.toString();            //restituisce "32"
+
+            var persona = new Object({nome: "Mario", cognome: "Rossi"});
+            persona.toString();		//restituisce "[object Object]"
+
+            var x = new Object(32);
+            x.valueOf();             //restituisce 32
+            Nel caso di oggetto non associato ad un tipo di dato primitivo viene restituito l’oggetto stesso.
+
+Number
+    L’oggetto Number fornisce metodi e proprietà per la manipolazione di valori numerici. Possiamo creare un oggetto Number a partire da un’espressione numerica:
+        var x = new Number(123);
+        var y = new Number(3.14);
+
+Math
+    Per il supporto di funzioni matematiche JavaScript prevede l’oggetto Math. A differenza dell’oggetto Number che abbiamo già visto e di altri
+    oggetti che vedremo in seguito, Math non consente la creazione di nuove istanze. Possiamo pensare ad esso come ad una API.
+        Math.max(89, 13, 6.4, 49, 87.2, 121, 40); //121
+        Math.min(89, 13, 6.4, 49, 87.2, 121, 40); //6.4
+        Math.pow(4, 3); //4³ = 64
+        Math.sqrt(144); //12
+        Math.ceil(3.4); //4
+        Math.floor(3.4) //3
+        Math.round(3.4) //3
+        Math.round(3.6) //4
+        Math.random() genera un numero casuale compreso tra 0 e 1
+        con il metodo floor() è possibile generare interi casuali compresi tra un minimo ed un massimo arbitrari
+        function generaInteroCasuale(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+String
+    Tramite l’operatore new possiamo creare istanze di oggetti String come mostrato di seguito:
+        var x = new String("Una nuova stringa");
+        var y = x.length;		//17
+
+        Estrarre un carattere da una stringa
+        var x = "Una nuova stringa".charAt(2); // a
+
+        Replace
+        var x = "Una nuova stringa".replace("s", "S");
+
+        individuare le sottostringhe
+        var x = "Una nuova stringa".indexOf("nuova");
+        var x = "Una nuova stringa".indexOf("a", 4); //8
+
+        estrarre una sottostringa
+        var x = "Una nuova stringa".substr(4, 5); //nuova
+
+        creare array dalle stringhe
+        var x = "Una nuova stringa".split(""); //x == ["U", "n", "a", " ", "n", "u", "o", "v", "a", " ", "s", "t", "r", "i", "n", "g", "a"]
+        var x = "Una nuova stringa".split("", 5); //x == ["U", "n", "a", " ", "n"]
+
+        Maiuscole e minuscole
+        var x = "Una nuova stringa".toLowerCase();//x == "una nuova stringa"
+        var y = "Una nuova stringa".toUpperCase();//y == "UNA NUOVA STRINGA"
+
+        var x = " Una nuova stringa ".trim(); //x == "Una nuova stringa"
+
+        var y = "Una nuova stringa".startsWith("Una");  //true
+        var z = "Una nuova stringa".endsWith(".");	    //false
+
+    Template String
+         Una template string è una sequenza di caratteri delimitata da backtick (`) al posto di singoli o doppi apici.
+         per il backtick digitare il numero 96 tenendo premuto il tasto ALT
+            var messaggio = `Attenzione!\nIl valore inserito ${valore} non è valido perché esso deve essere compreso tra ${valoreIniziale} e ${valoreFinale}.\nSi prega di riprovare.`;
+
+RegExp
+    Un’espressione regolare in JavaScript quindi è un oggetto, con delle proprietà e metodi che consentono di gestire testi,
+    individuare ed eventualmente sostituire stringhe all’interno di altre stringhe.
+        var y = /\d/;
+        y.test("str1nga");	//true
+        y.test("stringa");	//false
+
+        Esempi comuni di espressioni regolari
+            /\w+@\w+\.\w{2,4}/i 	indirizzo di posta elettronica
+            /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ 	indirizzo IP
+            /<div\b[^>]*>(.*?)<\/div>/i 	elemento HTML <div>
+            /[a-f0-9]+/i 	valori esadecimali
+            (https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/? 	un URL
+
+Date
+    Possiamo utilizzare l’oggetto Date per la creazione di istanze di date in quattro modi differenti:
+
+        1-Non specifichiamo alcun parametro nel costruttore e otteniamo un oggetto Date con il valore della data e ora corrente.
+        var w = new Date();
+
+        2-Passiamo un valore numerico che rappresenta il numero di millisecondi dal 1 Gennaio 1970
+        var x = new Date(1379989986515);
+
+        3-Specifichiamo una stringa che rappresenta una data:
+        var y = new Date("01/01/2013 15:30");
+
+        4-Indichiamo come argomenti rispettivamente l’anno, il mese, il giorno, l’ora, i minuti, i secondi e i millisecondi:
+        var z = new Date(2013, 1, 1, 15, 30, 0, 0);
+
+        L’oggetto Date prevede una serie di metodi che consentono di scomporre una data nei suoi componenti, come mostrato nella seguente tabella:
+            getFullYear() 	Restituisce l’anno rappresentato con quattro cifre
+            getMonth() 	Restituisce il mese (da 0 a 11)
+            getDate() 	Restituisce il giorno del mese (da 1 a 31)
+            getDay() 	Restituisce il giorno della settimana (da 0 a 6)
+            getHours() 	Restituisce l’ora
+            getMinutes() 	Restituisce i minuti
+            getSeconds() 	Restituisce i secondi
+            getMilliseconds() 	Restituisce i millisecondi
+
+            es.per ricavare il giorno
+                var oggi = new Date();
+                var giorno;
+                switch (oggi.getDay()) {
+                    case 0:
+                        giorno = "domenica";
+                        break;
+                    case 1:
+                        giorno = "lunedì";
+                        break;
+                    case 2:
+                        giorno = "martedì";
+                        break;
+                    case 3:
+                        giorno = "mercoledì";
+                        break;
+                    case 4:
+                        giorno = "giovedì";
+                        break;
+                    case 5:
+                        giorno = "venerdì";
+                        break;
+                    case 6:
+                        giorno = "sabato";
+                        break;
+                    }
+                console.log("Oggi è " + giorno);
+
+            in versione compatta
+                var oggi = new Date(),
+                giorno = ["domenica", "lunedì", "martedì", "mercoledì","giovedì", "venerdì","sabato"];
+                console.log("Oggi è " + giorno[oggi.getDay()]);
+
+        Modificare la data
+            setFullYear() 	Imposta l’anno di una data
+            setMonth() 	Imposta il mese di una data
+            setDate() 	Imposta il giorno del mese di unadata
+            setHours() 	Imposta l’ora di una data
+            setMinutes() 	Imposta i minuti di una data
+            setSeconds() 	Imposta i secondi di una data
+            setMilliseconds() 	Imposta i millisecondi di una data
+            setTime() 	Imposta data e ora specificandolain millisecondi rispetto al 1 Gennaio 1970
+
+            var data = new Date();
+            data.setFullYear(data.getFullYear() + 1);
+            console.log(data);
+
+            Notiamo che la modifica di una data aggiungendo o sottraendo valori, ad esempio mesi, giorni o ore, comporta la gestione automatica degli altri componenti della data.
+            Così, ad esempio, se si aggiungono 10 giorni al giorno di Natale si otterrà automaticamente la modifica del mese e dell’anno:
+                var data = new Date(2013, 11, 25);
+                data.setDate(data.getDate() + 10);
+                console.log(data); // Sat Jan 04 2014 ...
+
+            Confrontare le date
+                var scadenza = new Date(2013, 11, 10);
+                var oggi = new Date();
+                if (oggi < scadenza) messaggio = "Non ancora scaduto!";
+                if (oggi > scadenza) messaggio = "Scaduto!";
+                console.log(messaggio);
+
+        Rappresentare la data come stringa
+            toDateString() 	Converte la componente data in stringa, escludendo l’ora
+            toISOString() 	Converte una data in stringa in formato ISO
+            toLocaleDateString() 	Converte la componente data in stringa, escludendo l’ora, secondo le impostazioni locali
+            toLocaleTimeString() 	Converte la componente ora in stringa, escludendo la data, secondo le impostazioni locali
+            toLocaleString() 	Converte una data in stringa secondo le impostazioni locali
+            toString() 	Converte una data in stringa
+            toTimeString() 	Converte la componente ora in stringa, escludendo la data
+            toUTCString() 	Converte una data UTC in stringa
+
+oggetto Array
+    Oltre a ricorrere alla notazione letterale, possiamo creare un array sfruttando l’omonimo oggetto Array.
+        var x = new Array(3, 5, "testo", true);
+
+        length
+        la proprietà comunemente più utilizzata di un array è length che indica il numero di elementi in esso contenuti
+            var x = new Array("uno", "due", "tre");
+            x.length = 5;	//["uno", "due", "tre", undefined, undefined]
+            x.lenght = 2;	//["uno", "due"]
+
+        push() 	aggiunge un elemento alla fine di un array e restituisce la nuova lunghezza
+        pop() 	rimuove l’ultimo elemento di un array e restituisce l’elemento eliminato
+        shift() 	elimina il primo elemento di un array e lo restituisce al chiamante
+        unshift() 	aggiunge un elemento in cima all’array e restituisce la nuova lunghezza
+            var x = new Array("uno", "due", "tre");
+            var y = x.unshift("zero");  //x = ["zero", "uno", "due", "tre"] ; y = 4
+            var z = x.shift();          //x = ["uno", "due", "tre"]         ; z = "zero"
+
+        Splice
+            Per l’aggiunta e la rimozione di elementi in qualsiasi posizione all’interno di un array possiamo ricorrere al metodo splice().
+            Esso prevede due argomenti obbligatori e un numero indefinito di argomenti opzionali.
+                Il primo argomento indica la posizione dell’array da cui eliminare o aggiungere elementi;
+                il secondo argomento indica il numero di elementi da eliminare;
+                dal terzo argomento in poi è possibile specificare gli elementi da aggiungere.
+                    var x = new Array("uno", "due", "tre");
+                    var y = x.splice(1, 1, "quattro");
+                    // x = ["uno", "quattro", "tre"]
+                    // y = ["due"]
+                    var z = x.splice(2, 0, "cinque", "sei", "sette");
+                    // x = ["uno", "quattro", "cinque", "sei", "sette", "tre"]
+                    // z = []
+
+                Tramite il metodo slice() abbiamo la possibilità di estrarre una porzione di array fornendo l’indice iniziale e quello finale:
+                    var x = new Array("uno", "due", "tre", "quattro");
+                    var y = x.slice(1, 3); // y = ["due", "tre"]
+
+                Concatenare due array
+                    var x = new Array("uno", "due", "tre");
+                    var y = new Array("quattro", "cinque");
+                    var z = x.concat(y);	//["uno", "due", "tre", "quattro", "cinque"]
+
+                Ordinare gli array, sort e reverse
+                    var x = new Array("uno", "due", "tre");
+                    x.sort();		//["due", "tre", "uno"]
+                    x.reverse();	//["uno", "tre", "due"]
+
+                Cercare un elemento nell’array
+                    Possiamo individuare l’indice di un elemento all’interno di un array tramite il metodo indexOf().
+                    Questo metodo scandisce l’array alla ricerca dell’elemento e restituisce l’indice della prima occorrenza trovata:
+                        var x = new Array("uno", "due", "tre");
+                        var y = x.indexOf("due");               // 1
+
+                Convertire l’array in una stringa
+                    var x = new Array("uno", "due", "tre");
+                    var y = x.join();		//"uno,due,tre"
+
+                    var x = new Array("uno", "due", "tre");
+                    var y = x.join(" e poi ");		//"uno e poi due e poi tre"
+
+Typed Array
+    I Typed Array sono strutture dati che consentono la manipolazione efficiente di dati binari. Le specifiche prevedono due tipi di oggetto: ArrayBuffer e ArrayBufferView.
+    La disponbilità dei Typed Array consente a JavaScript di poter manipolare a basso livello dati binari come ad esempio immagini, suoni ed altre risorse multimediali.
+
+Set
+    Comunemente in JavaScript quando si ha bisogno di gestire insiemi di dati si fa ricorso agli array, ma non sempre questa struttura dati è comoda o sufficiente.
+    ECMAScript 6 definisce strutture dati molto comode che evitano di inventarci artifici o di appoggiarci a routine ad hoc per fare operazioni abbastanza comuni.
+    Un Set può contenere dati di qualsiasi tipo ma senza duplicati.
+        var mySet = new Set();
+        mySet.add(1);
+        mySet.add(2);
+        mySet.add("tre");
+
+        Possiamo analizzare il contenuto di un Set sfruttando:
+            la proprietà size, che indica il numero di elemento contenuti nella struttura dati
+            il metodo has(), che indica se l’elemento passato come argomento è contenuto nell’insieme.
+                console.log(mySet.size);	//3
+                console.log(mySet.has(2));	//true
+
+            Per eliminare un elemento da un Set utilizziamo il metodo delete() passandogli l’elemento da eliminare:
+                mySet.delete(1);
+
+            Il metodo clear(), infine, elimina tutti gli elementi contenuti nella struttura dati.
+
+Map
+    Oltre agli insiemi abbiamo la possibilità di creare mappe associative che ci consentono di abbinare un valore ad una chiave.
+    In realtà questo meccanismo è in qualche modo già intrinsecamente presente in JavaScript.
+    Infatti, come vedremo meglio più avanti, gli oggetti JavaScript non sono altro che coppie di chiavi e valori che ne rappresentano le proprietà.
+    Tuttavia la mappa associativa implicita degli oggetti JavaScript prevede che la chiave, quindi il nome della proprietà, non possa essere qualcosa di diverso da una stringa.
+    La nuova struttura dati Map, invece, consente di creare associazioni tra chiavi e valori di qualsiasi tipo, come possiamo vedere nel seguente esempio:
+        var myMap = new Map();
+        myMap.set("nome", "Mario");
+        myMap.set(3.14, "Pi greco");
+        var myObj = {id: 123, data: "test"};
+        myMap.set(myObj, "Oggetto");
+
+        myMap.delete(3.14);
+        console.log(myMap.has(3.14));	//false
+        console.log(myMap.size);		//2
+        console.log(myMap.get("nome"));	//'Mario'
+        console.log(myMap.get(myObj));	//'Oggetto'
+
+Funzioni anonime e oggetti “first-class”
+    Una funzione nella maggior parte dei linguaggi di programmazione è intesa come un meccanismo per identificare un gruppo di
+    istruzioni da eseguire su richiesta, eventualmente con un passaggio di parametri. In JavaScript una funzione è qualcosa in più:
+    una funzione JavaScript è in realtà un oggetto, più precisamente quello che tecnicamente è detto un oggetto di prima classe (first class object)
+    A differenza degli altri oggetti JavaScript basati, come abbiamo visto, su Object, una funzione ha come oggetto base Function
+
+    Ad esempio, possiamo assegnare una funzione ad un nome come una variabile, come mostra il seguente esempio:
+        var somma = function(x, y) {
+        	return x + y;
+        };
+
+        Normalmente, nella definizione classica di una funzione specifichiamo un nome per poter accedere ad essa in un’altra parte di uno script.
+        Nel caso in cui una funzione viene assegnata ad una variabile, invece, l’utilità del nome viene meno, dal momento che possiamo accedere ad essa tramite la variabile.
+        Possiamo invocare una funzione associata ad una variabile accostando semplicemente
+        al nome della variabile le parentesi tonde con gli eventuali parametri, come mostrato nel seguente esempio:
+            var z = somma(4, 8);
+            console.log(z);	// 12
+
+    Callback
+        La funzione passata come parametro è detta generalmente funzione di callback o semplicemente callback. Consideriamo il seguente un esempio:
+            function calcola(func, arg1, arg2) {
+                return func(arg1, arg2);
+            }
+
+            Possiamo sfruttare la funzione calcola() per eseguire ad esempio la funzione somma() definita negli esempi precedenti:
+                console.log(calcola(somma, 13, 25));	// 38
+
+            Un aspetto a cui prestare attenzione quando scriviamo funzioni che accettano callback è quello di accertarsi
+            che venga passata effettivamente una funzione prima di invocarla:
+                function calcola(func, arg1, arg2) {
+                	if (func && typeof func === "function") {
+                		return func(arg1, arg2);
+                	}
+                }
+
+            L’uso di funzioni di callback è molto frequente nella programmazione JavaScript. Ad esse si ricorre ad esempio, nell’esecuzione di alcuni metodi e
+            funzioni predefinite, nelle azioni asincrone come nelle chiamate HTTP o nella gestione di eventi.
+
+            Consideriamo ad esempio il metodo forEach() degli array:
+                var numeri = [11, 3, 24];
+                numeri.forEach(function(valore, indice) {
+                	console.log(valore);
+                });
+
+                oppure:
+                function mostraValore(valore, indice) {
+                	console.log(valore);
+                }
+                var numeri = [11, 3, 24];
+                numeri.forEach(mostraValore);
+
+                Per ordinare ad esempio un array di oggetti dobbiamo ricorrere ad un funzione di callback da passare al metodo sort()
+                che verrà internamente utilizzata per stabilire il criterio di confronto tra gli elementi dell’array.
+                    var persone = [{nome: "Mario",    cognome: "Rossi", professione: "impiegato"},
+                                   {nome: "Giuseppe", cognome: "Verdi", professione: "operaio"},
+                    			   {nome: "Marco",    cognome: "Neri",  professione: "insegnante"},];
+                    persone.sort(function(a, b) {
+                    	if (a.cognome < b.cognome) return -1;
+                    	if (a.cognome > b.cognome) return 1;
+                    	return 0;
+                    });
+
+Arrow function
+    Un nuovo tipo di funzione introdotta dalle specifiche di ECMASCript 2015 è rappresentato dalle arrow function. Si tratta di funzioni anonime con una sintassi molto concisa ed alcune specifiche caratteristiche che analizziamo in questa lezione.
+        var somma = function(x, y) {
+        	return x + y;
+        };
+        Possiamo implementarla utilizzando la sintassi delle arrow function nel seguente modo:
+        var somma = (x, y) => x + y;
+
+        La sintassi generale di una arrow function prevede le parentesi tonde intorno alla lista dei parametri e
+        le parentesi graffe per delimitare il corpo della funzione, come nel seguente esempio:
+            (x, y) => {return x + y; }
+
+        Se il corpo è costituito dalla sola istruzione return che restituisce una espressione, possiamo omettere la parola
+        chiave return e le parentesi graffe, come nell’esempio iniziale:
+            (x, y) => x + y;
+
+        Se la funzione prevede un solo parametro, possiamo omettere le parentesi tonde, come nel seguente esempio:
+            x => x * 2
+
+        Se la funzione non prevede alcun parametro, è obbligatorio l’uso delle parentesi tonde:
+            () => "Hello world!"
+
+        Quando utilizzare le arrow function
+        Data la sintassi compatta delle arrow function, esse si prestano molto bene ad essere utilizzate come callback. Consideriamo ad esempio il seguente codice:
+            var numeri = [18, 13, 24];
+            numeri.forEach(function(valore) {
+            	console.log(valore);
+            });
+
+            così:
+            var numeri = [18, 13, 24];
+            numeri.forEach(valore => console.log(valore));
