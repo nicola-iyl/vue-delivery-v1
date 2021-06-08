@@ -623,3 +623,91 @@ Arrow function
             così:
             var numeri = [18, 13, 24];
             numeri.forEach(valore => console.log(valore));
+
+GLI OGGETTI
+    un oggetto in JavaScript appare come una sorta di array associativo che è possibile costruire e modificare dinamicamente.
+    possiamo definire un oggetto nel seguente modo:
+        var persona = {
+        	nome: "Mario",
+        	cognome: "Rossi"
+        };
+
+        var persona = new Object({
+        	nome: "Mario",
+        	cognome: "Rossi"
+        });
+
+        Possiamo aggiungere in un secondo tempo una nuova proprietà senza particolari formalità:
+            persona.indirizzo = "Via Garibaldi, 50 - Roma";
+
+        È prevista anche la possibilità di eliminare una proprietà tramite l’istruzione delete:
+            delete persona.cognome;
+
+        poiché in JavaScript anche le funzioni sono oggetti, la distinzione tra proprietà e
+        metodi appare alquanto artificiosa. La definizione di un metodo infatti non è altro che l’assegnazione di una funzione ad una proprietà:
+            var persona.mostraNomeCompleto = function() {
+            	console.log(this.nome + " " + this.cognome);
+            };
+
+    Immaginiamo però di aver bisogno di più oggetti dello stesso tipo, ad esempio di più oggetti persona, che condividono la stessa struttura:
+        var persona = {
+        	nome: "Mario",
+        	cognome: "Rossi",
+        	indirizzo: "Via Garibaldi, 50 - Roma",
+        	email: "mario.rossi@html.it",
+        	mostraNomeCompleto: function() { ... },
+        	calcolaCodiceFiscale: function() { ... }
+        }
+
+    COSTRUTTORI
+        Per evitare quindi di dover ridefinire da zero oggetti che hanno la stessa struttura possiamo ricorrere ad un costruttore.
+        Un costruttore non è altro che una normale funzione JavaScript invocata mediante l’operatore new.
+        Vediamo ad esempio come creare un costruttore per l’oggetto persona:
+            function persona() {
+            	this.nome = "";
+            	this.cognome = "";
+            	this.indirizzo = "";
+            	this.email = "";
+            	this.mostraNomeCompleto = function() {...};
+            	this.calcolaCodiceFiscale = function() {...};
+            }
+        Per creare un oggetto di tipo persona dovremo a questo punto invocare la funzione premettendo l’operatore new:
+            var marioRossi = new persona();
+            marioRossi.nome = "Mario";
+            marioRossi.cognome = "Rossi";
+
+            var giuseppeVerdi = new persona();
+            giuseppeVerdi.nome = "Giuseppe";
+            giuseppeVerdi.cognome = "Verdi";
+
+        Consideriamo ad esempio la seguente definizione del costruttore dell’oggetto persona:
+            function persona(nome, cognome) {
+            	this.nome = nome;
+            	this.cognome = cognome;
+            	this.indirizzo = "";
+            	this.email = "";
+            	this.mostraNomeCompleto = function() {...};
+            	this.calcolaCodiceFiscale = function() {...};
+            }
+
+            var marioRossi = new persona("Mario", "Rossi");
+            var giuseppeVerdi = new persona("Giuseppe", "Verdi");
+
+Rappresentazione JSON
+    il seguente oggetto:
+        {nome: "Mario", cognome: "Rossi"}
+    viene rappresentato in JSON con la seguente stringa:
+        '{nome: "Mario", cognome: "Rossi"}'
+    il seguente array:
+        [1, "test", true]
+    viene rappresentato come:
+        '[1, "test", true]'
+
+    parse() e stringify()
+        Il metodo parse() prende in input una stringa JSON e genera il corrispondente oggetto JavaScript:
+            var marioRossi = JSON.parse('{nome: "Mario", cognome: "Rossi"}');
+
+        Il metodo stringify() genera la rappresentazione JSON dell’oggetto passato come argomento:
+            var jsonMarioRossi = JSON.stringify({nome: "Mario", cognome: "Rossi"});
+
+        Se l’oggetto da rappresentare contiene dei metodi, questi vengono semplicemente ignorati dal parser.
