@@ -711,3 +711,71 @@ Rappresentazione JSON
             var jsonMarioRossi = JSON.stringify({nome: "Mario", cognome: "Rossi"});
 
         Se l’oggetto da rappresentare contiene dei metodi, questi vengono semplicemente ignorati dal parser.
+
+try, catch
+    try {
+    	// Blocco di codice
+    } catch(e) {
+    	// Gestione dell'eccezione
+    }
+
+    Ecco un esempio minimale di utilizzo di try..catch:
+        var x = 0;
+        try {
+        	func();
+        	x = x + 1;
+        } catch(e) {
+        	console.log(e.message);  // func is not defined
+        }
+        console.log(x);  //0
+
+    Il costrutto try..catch prevede la clausola opzionale finally che consente di specificare
+    un blocco di codice da eseguire in ogni caso, anche se si verificano eccezioni:
+        var x = 0;
+        try {
+        	func();
+        	x = x + 1;
+        } catch(e) {
+        	console.log(e.message);  // func is not defined
+        } finally {
+        	x = x - 1;
+        }
+        console.log(x);  // -1
+
+throw
+    abbiamo la possibilità di generare eccezioni da programma tramite l’istruzione throw in modo da avere una gestione uniforme degli errori.
+    Nel seguente esempio generiamo un’eccezione se una stringa non rappresenta un indirizzo di e-mail valido:
+        function convalidaEmail(value) {
+        	var emailRegExp = /\w+@\w+\.\w{2,4}/i;
+        	if (emailRegExp.test(value)) {
+        		return true;
+        	} else {
+        		throw new Error("Email non valida!");
+        	}
+        }
+
+MODULI
+    Secondo le specifiche, un modulo JavaScript è memorizzato in un file: esiste esattamente un modulo per file e un file contiene un solo modulo.
+    Il seguente è un esempio di modulo che esporta la funzione somma():
+        export function somma(x, y) {
+        	return x + y;
+        }
+
+    Come possiamo vedere, utilizziamo la parola chiave export per indicare che abbiamo intenzione di esportare la funzione somma(),
+    cioè la rendiamo accessibile all’esterno del modulo. Tutto ciò che non viene esplicitamente esportato non sarà visibile fuori dal modulo.
+
+    Oltre a funzioni possiamo esportare anche altri elementi definiti nel modulo, come ad esempio classi o costanti, come evidenziamo nel seguente esempio:
+        function prodotto(x, y) {
+        	return x*y;
+        }
+        export function somma(x, y) {
+        	return x + y;
+        }
+        export const pigreco = 3.141592;
+        export class Circonferenza {
+        	constructor(raggio) {
+        		this.raggio = raggio;
+        	}
+        }
+
+        Il modulo dell’esempio esporta, oltra alla funzione somma(), la costante pigreco e la classe Circonferenza.
