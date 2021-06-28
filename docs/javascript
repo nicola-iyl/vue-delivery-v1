@@ -779,3 +779,94 @@ MODULI
         }
 
         Il modulo dell’esempio esporta, oltra alla funzione somma(), la costante pigreco e la classe Circonferenza.
+
+        IMPORT
+        Le funzionalità e gli altri elementi esportati da un modulo JavaScript possono essere importate da un altro modulo tramite la parola chiave import.
+        Supponendo di aver salvato in un file mioModulo.js il codice visto negli esempi precedenti,
+        il seguente è un esempio di importazione della funzione somma() all’interno di un altro modulo:
+
+            import {somma} from "mioModulo";
+            console.log(somma(2, 5));
+
+            Per importare più elementi da un modulo è sufficiente indicare l’elenco all’interno delle parentesi graffe:
+                import {somma, pigreco} from "mioModulo";
+
+            È possibile specificare un alias per un elemento importato da un modulo, come mostrato di seguito:
+                import {somma, pigreco as pigrecopiupreciso} from "mioModulo";
+                var pigreco = 3.14;
+
+            Se vogliamo importare tutti gli elementi esportati da un modulo possiamo specificare il simbolo * come nel seguente esempio:
+                import * as Matematica from "mioModulo";
+                console.log(Matematica.somma(2, 5));
+
+OBSERVER PARTNER
+    L’Observer Pattern è basato su un concetto abbastanza semplice:
+    un oggetto (observer) vuole essere avvisato del verificarsi di certe variazioni di stato di un altro oggetto (observable).
+
+    Supponiamo che un oggetto abbia il compito di diffondere messaggi che possono interessare altri oggetti.
+    L’oggetto che diffonde i messaggi avrà il ruolo di observable mentre gli oggetti interessati ai messaggi rappresenteranno gli observer.
+    L’observable implementerà i metodi per registrare e annullare la registrazione ed un metodo per inserire un nuovo messaggio
+
+        var centraleMessaggi = function() {
+        	this.listaObserver = [];
+        };
+        centraleMessaggi.prototype = {
+        	subscribe: function(callback) {
+        		this.listaObserver.push(callback);
+        	},
+        	unsubscribe: function(callback) {
+        		for (var i = 0; i < this.listaObserver.length; i++) {
+        			if (this.listaObserver[i] === callback) {
+        				this.listaObserver.splice(i, 1);
+        				return;
+        			}
+        		}
+        	},
+        	nuovoMessaggio: function(msg) {
+        		for (var i = 0; i < this.listaObserver.length; i++) {
+        			this.listaObserver[i](msg);
+        		}
+        	}
+        };
+
+        I metodi subscribe() e unsubscribe() aggiungono e tolgono rispettivamente dall’array listaObserver
+        l’elemento passato come parametro. Nello specifico si tratta di una funzione da eseguire nel momento in cui arriva un nuovo messaggio.
+        La notifica dell’arrivo di un nuovo messaggio viene fatta dal metodo nuovoMessaggio()
+        che si occupa di scorrere l’elenco delle funzioni presenti in listaObserver ed eseguirle passando il nuovo messaggio.
+
+        L’observer che vuole ricevere la notifica dell’arrivo di un nuovo messaggio dovrà quindi invocare
+        il metodo subscribe() passando la funzione di callback da eseguire al verificarsi dell’evento:
+
+            var cm = new centraleMessaggi();
+            cm.subscribe(function(msg) {
+                //...
+            });
+
+        Un oggetto che invia un messaggio invocherà semplicemente il metodo nuovoMessaggio(),
+        ignorando del tutto il fatto che ci siano altri oggetti in attesa di esso:
+
+            cm.nuovoMessaggio("Questo è un nuovo messaggio!");
+
+PROMISE PATTERN
+    Secondo questo pattern, una promise è un oggetto che rappresenta il risultato pendente di un’operazione asincrona.
+    Questo oggetto può essere usato per definire le attività da eseguire dopo che l’esecuzione asincrona è terminata.
+        getMessaggio(
+        	function(msg) {
+        		sendMessaggio( msg, "utente@dominio.com",
+        			function()    { console.log("Messaggio inoltrato"); },
+        			function(err) { console.log("Si è verificato un errore: " + err.message); } );
+        	},
+        	function(err) { console.log("Si è verificato un errore: " + err.message); }
+        );
+
+        Come possiamo vedere, però, il codice si è talmente complicato da diventare illeggibile
+        (lo diventa certamente di più all’aumentare della complessità delle chiamate).
+
+        Per mantenere il codice compatto e facilmente manutenibile possiamo adottare il Promise Pattern.
+            var promise = getMessaggio();
+            promise.done(sendMessaggio).done(function() {
+            	console.log("Messaggio inoltrato");
+            });
+            promise.fail(function(err) {
+            	console.log("Si è verificato un errore: " + err.message);
+            });
